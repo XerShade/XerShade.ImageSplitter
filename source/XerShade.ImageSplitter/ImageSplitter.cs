@@ -1,9 +1,14 @@
 ﻿using XerShade.ImageSplitter.Extensions;
+using XerShade.Libraries.Images.Splitting.EventArgs;
+using XerShade.Libraries.Images.Splitting.Interfaces;
+using XSplitter = XerShade.Libraries.Images.Splitting.ImageSplitter;
 
 namespace XerShade.ImageSplitter
 {
     public partial class ImageSplitter : Form
     {
+        private IImageSplitter? splitter;
+
         public ImageSplitter()
         {
             InitializeComponent();
@@ -11,22 +16,13 @@ namespace XerShade.ImageSplitter
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
+            if(splitter is null) { return; }
+
             prgProgress.Value = 0;
             prgProgress.Maximum = (int)numRows.Value * (int)numColumns.Value;
             prgProgress.Visible = true;
 
-            for (int y = 0; y < (int)numRows.Value; y++)
-            {
-                for (int x = 0; x < (int)numColumns.Value; x++)
-                {
-                    var index = (int)(y * numColumns.Value + x);
-                    prgProgress.Value = index;
-
-                    Application.DoEvents();
-
-                    // Do the image splitting things.
-                }
-            }
+            splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
 
             prgProgress.Visible = false;
         }
@@ -36,6 +32,8 @@ namespace XerShade.ImageSplitter
             if (openImageDialog.ShowDialog() != DialogResult.OK) { return; }
 
             txtSource.Text = openImageDialog.FileName;
+            splitter = new XSplitter(txtSource.Text, txtOutputPath.Text);
+            splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; };
 
             var fileName = Path.GetFileNameWithoutExtension(txtSource.Text);
             var fileExtension = Path.GetExtension(txtSource.Text);
