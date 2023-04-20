@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <BaseOutputPath>$(SolutionDir)bin\$(AssemblyName)</BaseOutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <Title>$(AssemblyName)</Title>
+    <Authors>XerShade</Authors>
+    <Company>XerShade's Corner</Company>
+    <Product>XerShade.ImageSplitter</Product>
+    <Description>A simple application library designed to split images into smaller ones.</Description>
+    <Copyright>© XerShade 2023 - 2023</Copyright>
+    <PackageProjectUrl>https://github.com/XerShade/XerShade.ImageSplitter</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/XerShade/XerShade.ImageSplitter</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>xershade,image,splitter</PackageTags>
+    <PackageOutputPath>$(SolutionDir)pkg\$(AssemblyName)</PackageOutputPath>
+    <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <Version>1.0.0</Version>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XerShade.Libraries.Images.Splitting\XerShade.Libraries.Images.Splitting.csproj" />
+  </ItemGroup>
+
+</Project>

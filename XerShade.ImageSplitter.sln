@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "source", "source", "{FE4E56E5-2B8A-4969-9C0C-8BDFB326C2B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XerShade.ImageSplitter", "source\XerShade.ImageSplitter\XerShade.ImageSplitter.csproj", "{20E2C27D-36B5-4784-95AB-A9905A578458}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XerShade.Libraries.Images.Splitting", "source\XerShade.Libraries.Images.Splitting\XerShade.Libraries.Images.Splitting.csproj", "{4334FF63-DFCA-4AD6-BD71-8B2FC1495567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XerShade.Libraries.Images.Splitting.Testing", "source\XerShade.Libraries.Images.Splitting.Testing\XerShade.Libraries.Images.Splitting.Testing.csproj", "{E2D93C9A-5545-4E69-ADC9-8A0C47D17410}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{20E2C27D-36B5-4784-95AB-A9905A578458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E2C27D-36B5-4784-95AB-A9905A578458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E2C27D-36B5-4784-95AB-A9905A578458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E2C27D-36B5-4784-95AB-A9905A578458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4334FF63-DFCA-4AD6-BD71-8B2FC1495567}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4334FF63-DFCA-4AD6-BD71-8B2FC1495567}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4334FF63-DFCA-4AD6-BD71-8B2FC1495567}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4334FF63-DFCA-4AD6-BD71-8B2FC1495567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2D93C9A-5545-4E69-ADC9-8A0C47D17410}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2D93C9A-5545-4E69-ADC9-8A0C47D17410}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2D93C9A-5545-4E69-ADC9-8A0C47D17410}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2D93C9A-5545-4E69-ADC9-8A0C47D17410}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20E2C27D-36B5-4784-95AB-A9905A578458} = {FE4E56E5-2B8A-4969-9C0C-8BDFB326C2B7}
+		{4334FF63-DFCA-4AD6-BD71-8B2FC1495567} = {FE4E56E5-2B8A-4969-9C0C-8BDFB326C2B7}
+		{E2D93C9A-5545-4E69-ADC9-8A0C47D17410} = {FE4E56E5-2B8A-4969-9C0C-8BDFB326C2B7}
+	EndGlobalSection
+EndGlobal
