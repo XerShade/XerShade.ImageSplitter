@@ -16,13 +16,32 @@ namespace XerShade.ImageSplitter
 
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            if(splitter is null) { return; }
-
             prgProgress.Value = 0;
             prgProgress.Maximum = (int)numRows.Value * (int)numColumns.Value;
             prgProgress.Visible = true;
 
-            splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
+            if (txtSource.Text.Substring(txtSource.Text.Length - 1, 1) == Constants.DirectorySeparatorChar)
+            {
+                if (Directory.Exists(txtSource.Text))
+                {
+                    foreach(var file in Directory.GetFiles(txtSource.Text))
+                    {
+                        var fileName = Path.GetFileNameWithoutExtension(file);
+                        var fileExtension = Path.GetExtension(file);
+                        txtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
+
+                        splitter = new XSplitter(file, txtOutputPath.Text);
+                        splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; Application.DoEvents(); };
+                        splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
+                    }
+                }
+            }
+            else
+            {
+                splitter = new XSplitter(txtSource.Text, txtOutputPath.Text);
+                splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; Application.DoEvents(); };
+                splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
+            }
 
             prgProgress.Visible = false;
         }
@@ -32,8 +51,6 @@ namespace XerShade.ImageSplitter
             if (openImageDialog.ShowDialog() != DialogResult.OK) { return; }
 
             txtSource.Text = openImageDialog.FileName;
-            splitter = new XSplitter(txtSource.Text, txtOutputPath.Text);
-            splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; };
 
             var fileName = Path.GetFileNameWithoutExtension(txtSource.Text);
             var fileExtension = Path.GetExtension(txtSource.Text);
