@@ -7,7 +7,7 @@ public interface IImageSplitter
     string OutputPath { get; }
     string SourcePath { get; }
 
-    event EventHandler<ImageSplitterIndexEventArgs>? IndexChanged;
+    event EventHandler<OnSpliceImageEventArgs>? OnSpliceImage;
 
-    void Split(int rows, int columns, string outputFormat = "");
+    void Split(int rows, int columns, string outputFormat = "", bool invertLoops = false);
 }

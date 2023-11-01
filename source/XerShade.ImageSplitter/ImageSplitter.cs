@@ -28,16 +28,16 @@ public partial class ImageSplitter : Form
                     this.TxtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
 
                     this.splitter = new XSplitter(file, this.TxtOutputPath.Text);
-                    this.splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
-                    this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text);
+                    this.splitter.OnSpliceImage += (object? sender, OnSpliceImageEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
+                    this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text, this.ChkInvertLoops.Checked);
                 }
             }
         }
         else
         {
             this.splitter = new XSplitter(this.TxtSource.Text, this.TxtOutputPath.Text);
-            this.splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
-            this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text);
+            this.splitter.OnSpliceImage += (object? sender, OnSpliceImageEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
+            this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text, this.ChkInvertLoops.Checked);
         }
 
         this.PrgProgress.Visible = false;

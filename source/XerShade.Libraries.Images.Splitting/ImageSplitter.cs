@@ -6,7 +6,11 @@ namespace XerShade.Libraries.Images.Splitting;
 
 public class ImageSplitter : IImageSplitter
 {
-    public event EventHandler<ImageSplitterIndexEventArgs>? IndexChanged;
+    private static int CalculateIndex(int columns, int rows, int y, int x, bool invert) => !invert ? CalculateXYIndex(columns, y, x) : CalculateYXIndex(rows, y, x);
+    private static int CalculateYXIndex(int rows, int y, int x) => (x * rows) + y;
+    private static int CalculateXYIndex(int columns, int y, int x) => (y * columns) + x;
+
+    public event EventHandler<OnSpliceImageEventArgs>? OnSpliceImage;
 
     public string SourcePath { get; protected set; }
     public string OutputPath { get; protected set; }
@@ -17,7 +21,7 @@ public class ImageSplitter : IImageSplitter
         this.OutputPath = outputPath ?? throw new ArgumentNullException(nameof(outputPath));
     }
 
-    public void Split(int rows, int columns, string outputFormat = "")
+    public void Split(int rows, int columns, string outputFormat = "", bool invertLoops = false)
     {
         if (string.IsNullOrWhiteSpace(this.SourcePath)) { throw new NullReferenceException(nameof(this.SourcePath)); }
         if (string.IsNullOrWhiteSpace(this.OutputPath)) { throw new NullReferenceException(nameof(this.OutputPath)); }
@@ -32,34 +36,50 @@ public class ImageSplitter : IImageSplitter
             outputFormat = string.Format("{1}-{0}{2}", "{0}", fileName, fileExtension);
         }
 
-        Image source = Image.FromFile(this.SourcePath);
-        int spliceWidth = (int)Math.Floor(source.Width / (float)columns);
-        int spliceHeight = (int)Math.Floor(source.Height / (float)rows);
-        Rectangle destRect = new(0, 0, spliceWidth, spliceHeight);
-
-        for (int y = 0; y < rows; y++)
+        try
         {
-            for (int x = 0; x < columns; x++)
+            using Image source = Image.FromFile(this.SourcePath);
+
+            int spliceWidth = (int)Math.Floor(source.Width / (float)columns);
+            int spliceHeight = (int)Math.Floor(source.Height / (float)rows);
+            Rectangle destRect = new(0, 0, spliceWidth, spliceHeight);
+
+            for (int y = 0; y < rows; y++)
             {
-                Rectangle srcRect = new(x * spliceWidth, y * spliceHeight, spliceWidth, spliceHeight);
-                int index = (y * columns) + x;
-                IndexChanged?.Invoke(this, new ImageSplitterIndexEventArgs(index));
-
-                Bitmap splice = new(spliceWidth, spliceHeight);
-                Graphics graphics = Graphics.FromImage(splice);
-
-                graphics.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
-                graphics.Dispose();
-
-                if (outputFormat.Contains("{0}"))
+                for (int x = 0; x < columns; x++)
                 {
-                    splice.Save(Path.Combine(this.OutputPath, string.Format(outputFormat, index)));
-                }
-                else
-                {
-                    splice.Save(Path.Combine(this.OutputPath, outputFormat));
+                    int index = CalculateIndex(columns, rows, y, x, invertLoops);
+                    this.SpliceImage(index, outputFormat, source, spliceWidth, spliceHeight, destRect, y, x);
                 }
             }
+
+            source.Dispose();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(string.Format("An exception has occured while trying to process: {0}{1}{2}", this.SourcePath, Environment.NewLine, e.Message));
+        }        
+    }
+
+    private void SpliceImage(int index, string outputFormat, Image source, int spliceWidth, int spliceHeight, Rectangle destRect, int y, int x)
+    {
+        Rectangle srcRect = new(x * spliceWidth, y * spliceHeight, spliceWidth, spliceHeight);
+        OnSpliceImage?.Invoke(this, new OnSpliceImageEventArgs(index));
+
+        using Bitmap splice = new(spliceWidth, spliceHeight);
+        using (Graphics graphics = Graphics.FromImage(splice))
+        {
+            graphics.DrawImage(source, destRect, srcRect, GraphicsUnit.Pixel);
+            graphics.Dispose();
+        }
+
+        if (outputFormat.Contains("{0}"))
+        {
+            splice.Save(Path.Combine(this.OutputPath, string.Format(outputFormat, index)));
+        }
+        else
+        {
+            splice.Save(Path.Combine(this.OutputPath, outputFormat));
         }
     }
 }

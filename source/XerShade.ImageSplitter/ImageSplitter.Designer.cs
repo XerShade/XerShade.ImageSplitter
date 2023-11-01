@@ -42,6 +42,7 @@
             TxtOutputFormat = new TextBox();
             LblOutputFormat = new Label();
             OpenImageDialog = new OpenFileDialog();
+            ChkInvertLoops = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)NumRows).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NumColumns).BeginInit();
             this.SuspendLayout();
@@ -83,7 +84,7 @@
             LblRows.AutoSize = true;
             LblRows.Location = new Point(138, 97);
             LblRows.Name = "LblRows";
-            LblRows.Size = new Size(38, 15);
+            LblRows.Size = new Size(56, 15);
             LblRows.TabIndex = 4;
             LblRows.Text = "Rows (Y):";
             // 
@@ -92,7 +93,7 @@
             LblColumns.AutoSize = true;
             LblColumns.Location = new Point(12, 97);
             LblColumns.Name = "LblColumns";
-            LblColumns.Size = new Size(58, 15);
+            LblColumns.Size = new Size(76, 15);
             LblColumns.TabIndex = 5;
             LblColumns.Text = "Columns (X):";
             // 
@@ -116,7 +117,7 @@
             // 
             // PrgProgress
             // 
-            PrgProgress.Location = new Point(12, 144);
+            PrgProgress.Location = new Point(12, 169);
             PrgProgress.Name = "PrgProgress";
             PrgProgress.Size = new Size(246, 23);
             PrgProgress.TabIndex = 8;
@@ -124,7 +125,7 @@
             // 
             // BtnGenerate
             // 
-            BtnGenerate.Location = new Point(12, 144);
+            BtnGenerate.Location = new Point(12, 169);
             BtnGenerate.Name = "BtnGenerate";
             BtnGenerate.Size = new Size(246, 23);
             BtnGenerate.TabIndex = 9;
@@ -162,11 +163,22 @@
             // 
             OpenImageDialog.Title = "Select Source Image";
             // 
+            // ChkInvertLoops
+            // 
+            ChkInvertLoops.AutoSize = true;
+            ChkInvertLoops.Location = new Point(12, 144);
+            ChkInvertLoops.Name = "ChkInvertLoops";
+            ChkInvertLoops.Size = new Size(132, 19);
+            ChkInvertLoops.TabIndex = 13;
+            ChkInvertLoops.Text = "Invert Output Loops";
+            ChkInvertLoops.UseVisualStyleBackColor = true;
+            // 
             // ImageSplitter
             // 
             this.AutoScaleDimensions = new SizeF(7F, 15F);
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new Size(277, 179);
+            this.ClientSize = new Size(277, 208);
+            this.Controls.Add(ChkInvertLoops);
             this.Controls.Add(LblOutputFormat);
             this.Controls.Add(TxtOutputFormat);
             this.Controls.Add(BtnBrowse);
@@ -208,5 +220,6 @@
         private TextBox TxtOutputFormat;
         private Label LblOutputFormat;
         private OpenFileDialog OpenImageDialog;
+        private CheckBox ChkInvertLoops;
     }
 }
