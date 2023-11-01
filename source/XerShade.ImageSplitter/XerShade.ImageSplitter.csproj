@@ -23,7 +23,7 @@
     <PackageOutputPath>$(SolutionDir)pkg\$(AssemblyName)</PackageOutputPath>
     <AssemblyVersion>$(VersionPrefix)</AssemblyVersion>
     <FileVersion>$(VersionPrefix)</FileVersion>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 

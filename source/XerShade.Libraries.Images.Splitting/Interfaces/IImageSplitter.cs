@@ -1,14 +1,13 @@
 ﻿using XerShade.Libraries.Images.Splitting.EventArgs;
 
-namespace XerShade.Libraries.Images.Splitting.Interfaces
+namespace XerShade.Libraries.Images.Splitting.Interfaces;
+
+public interface IImageSplitter
 {
-    public interface IImageSplitter
-    {
-        string OutputPath { get; }
-        string SourcePath { get; }
+    string OutputPath { get; }
+    string SourcePath { get; }
 
-        event EventHandler<ImageSplitterIndexEventArgs>? IndexChanged;
+    event EventHandler<ImageSplitterIndexEventArgs>? IndexChanged;
 
-        void Split(int rows, int columns, string outputFormat = "");
-    }
+    void Split(int rows, int columns, string outputFormat = "");
 }

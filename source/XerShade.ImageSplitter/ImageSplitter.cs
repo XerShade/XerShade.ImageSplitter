@@ -3,72 +3,68 @@ using XerShade.Libraries.Images.Splitting.EventArgs;
 using XerShade.Libraries.Images.Splitting.Interfaces;
 using XSplitter = XerShade.Libraries.Images.Splitting.ImageSplitter;
 
-namespace XerShade.ImageSplitter
+namespace XerShade.ImageSplitter;
+
+public partial class ImageSplitter : Form
 {
-    public partial class ImageSplitter : Form
+    private IImageSplitter? splitter;
+
+    public ImageSplitter() => this.InitializeComponent();
+
+    private void BtnGenerate_Click(object sender, EventArgs e)
     {
-        private IImageSplitter? splitter;
+        this.PrgProgress.Value = 0;
+        this.PrgProgress.Maximum = (int)this.NumRows.Value * (int)this.NumColumns.Value;
+        this.PrgProgress.Visible = true;
 
-        public ImageSplitter()
+        if (this.TxtSource.Text.Substring(this.TxtSource.Text.Length - 1, 1) == Constants.DirectorySeparatorChar)
         {
-            InitializeComponent();
-        }
-
-        private void btnGenerate_Click(object sender, EventArgs e)
-        {
-            prgProgress.Value = 0;
-            prgProgress.Maximum = (int)numRows.Value * (int)numColumns.Value;
-            prgProgress.Visible = true;
-
-            if (txtSource.Text.Substring(txtSource.Text.Length - 1, 1) == Constants.DirectorySeparatorChar)
+            if (Directory.Exists(this.TxtSource.Text))
             {
-                if (Directory.Exists(txtSource.Text))
+                foreach(string file in Directory.GetFiles(this.TxtSource.Text))
                 {
-                    foreach(var file in Directory.GetFiles(txtSource.Text))
-                    {
-                        var fileName = Path.GetFileNameWithoutExtension(file);
-                        var fileExtension = Path.GetExtension(file);
-                        txtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
+                    string fileName = Path.GetFileNameWithoutExtension(file);
+                    string fileExtension = Path.GetExtension(file);
+                    this.TxtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
 
-                        splitter = new XSplitter(file, txtOutputPath.Text);
-                        splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; Application.DoEvents(); };
-                        splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
-                    }
+                    this.splitter = new XSplitter(file, this.TxtOutputPath.Text);
+                    this.splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
+                    this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text);
                 }
             }
-            else
-            {
-                splitter = new XSplitter(txtSource.Text, txtOutputPath.Text);
-                splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { prgProgress.Value = e.Value; Application.DoEvents(); };
-                splitter.Split((int)numRows.Value, (int)numColumns.Value, txtOutputFormat.Text);
-            }
-
-            prgProgress.Visible = false;
         }
-
-        private void btnBrowse_Click(object sender, EventArgs e)
+        else
         {
-            if (openImageDialog.ShowDialog() != DialogResult.OK) { return; }
-
-            txtSource.Text = openImageDialog.FileName;
-
-            var fileName = Path.GetFileNameWithoutExtension(txtSource.Text);
-            var fileExtension = Path.GetExtension(txtSource.Text);
-            txtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
+            this.splitter = new XSplitter(this.TxtSource.Text, this.TxtOutputPath.Text);
+            this.splitter.IndexChanged += (object? sender, ImageSplitterIndexEventArgs e) => { this.PrgProgress.Value = e.Value; Application.DoEvents(); };
+            this.splitter.Split((int)this.NumRows.Value, (int)this.NumColumns.Value, this.TxtOutputFormat.Text);
         }
 
-        private void ImageSplitter_Load(object sender, EventArgs e)
-        {
-            txtSource.Text = Constants.ApplicationPath;
-            txtOutputPath.Text = Constants.OutputPath;
-            openImageDialog.InitialDirectory = Constants.ApplicationPath;
-            numRows.Maximum = Constants.MaxRows;
-            numColumns.Maximum = Constants.MaxColumns;
+        this.PrgProgress.Visible = false;
+    }
 
-            prgProgress.VisibleChanged += (object? sender, EventArgs e) => { 
-                this.Enable(!prgProgress.Visible);
-                Application.DoEvents();
-            };
-        }
+    private void BtnBrowse_Click(object sender, EventArgs e)
+    {
+        if (this.OpenImageDialog.ShowDialog() != DialogResult.OK) { return; }
+
+        this.TxtSource.Text = this.OpenImageDialog.FileName;
+
+        string fileName = Path.GetFileNameWithoutExtension(this.TxtSource.Text);
+        string fileExtension = Path.GetExtension(this.TxtSource.Text);
+        this.TxtOutputFormat.Text = string.Format(Constants.OutputName, "{0}", fileName, fileExtension);
+    }
+
+    private void ImageSplitter_Load(object sender, EventArgs e)
+    {
+        this.TxtSource.Text = Constants.ApplicationPath;
+        this.TxtOutputPath.Text = Constants.OutputPath;
+        this.OpenImageDialog.InitialDirectory = Constants.ApplicationPath;
+        this.NumRows.Maximum = Constants.MaxRows;
+        this.NumColumns.Maximum = Constants.MaxColumns;
+
+        this.PrgProgress.VisibleChanged += (object? sender, EventArgs e) => { 
+            this.Enable(!this.PrgProgress.Visible);
+            Application.DoEvents();
+        };
     }
 }

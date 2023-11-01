@@ -1,25 +1,25 @@
-﻿namespace XerShade.ImageSplitter.Extensions
+﻿namespace XerShade.ImageSplitter.Extensions;
+
+public static class ControlExtensions
 {
-    public static class ControlExtensions
+    public static void Enable(this Control control, bool state)
     {
-        public static void Enable(this Control control, bool state)
+        if (control is null) { return; }
+
+        foreach (Control c in control.Controls)
         {
-            if (control is null) { return; }
+            c.Enable(state);
+        }
 
-            foreach (Control c in control.Controls)
+        try
+        {
+            _ = control.Invoke((MethodInvoker)(() =>
             {
-                c.Enable(state);
-            }
-
-            try
-            {
-                control.Invoke((MethodInvoker)(() => {
-                    control.Enabled = state;
-                }));
-            }
-            catch
-            {
-            }
+                control.Enabled = state;
+            }));
+        }
+        catch
+        {
         }
     }
 }
