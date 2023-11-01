@@ -44,7 +44,7 @@
             OpenImageDialog = new OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)NumRows).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NumColumns).BeginInit();
-            SuspendLayout();
+            this.SuspendLayout();
             // 
             // LblSourceImage
             // 
@@ -81,24 +81,24 @@
             // LblRows
             // 
             LblRows.AutoSize = true;
-            LblRows.Location = new Point(12, 97);
+            LblRows.Location = new Point(138, 97);
             LblRows.Name = "LblRows";
             LblRows.Size = new Size(38, 15);
             LblRows.TabIndex = 4;
-            LblRows.Text = "Rows:";
+            LblRows.Text = "Rows (Y):";
             // 
             // LblColumns
             // 
             LblColumns.AutoSize = true;
-            LblColumns.Location = new Point(138, 97);
+            LblColumns.Location = new Point(12, 97);
             LblColumns.Name = "LblColumns";
             LblColumns.Size = new Size(58, 15);
             LblColumns.TabIndex = 5;
-            LblColumns.Text = "Columns:";
+            LblColumns.Text = "Columns (X):";
             // 
             // NumRows
             // 
-            NumRows.Location = new Point(12, 115);
+            NumRows.Location = new Point(138, 115);
             NumRows.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumRows.Name = "NumRows";
             NumRows.Size = new Size(120, 23);
@@ -107,7 +107,7 @@
             // 
             // NumColumns
             // 
-            NumColumns.Location = new Point(138, 115);
+            NumColumns.Location = new Point(12, 115);
             NumColumns.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NumColumns.Name = "NumColumns";
             NumColumns.Size = new Size(120, 23);
@@ -130,7 +130,7 @@
             BtnGenerate.TabIndex = 9;
             BtnGenerate.Text = "Generate";
             BtnGenerate.UseVisualStyleBackColor = true;
-            BtnGenerate.Click += BtnGenerate_Click;
+            BtnGenerate.Click += this.BtnGenerate_Click;
             // 
             // BtnBrowse
             // 
@@ -140,7 +140,7 @@
             BtnBrowse.TabIndex = 10;
             BtnBrowse.Text = "Browse";
             BtnBrowse.UseVisualStyleBackColor = true;
-            BtnBrowse.Click += BtnBrowse_Click;
+            BtnBrowse.Click += this.BtnBrowse_Click;
             // 
             // TxtOutputFormat
             // 
@@ -164,32 +164,32 @@
             // 
             // ImageSplitter
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(277, 179);
-            Controls.Add(LblOutputFormat);
-            Controls.Add(TxtOutputFormat);
-            Controls.Add(BtnBrowse);
-            Controls.Add(PrgProgress);
-            Controls.Add(BtnGenerate);
-            Controls.Add(NumColumns);
-            Controls.Add(NumRows);
-            Controls.Add(LblColumns);
-            Controls.Add(LblRows);
-            Controls.Add(TxtOutputPath);
-            Controls.Add(LblOutputPath);
-            Controls.Add(TxtSource);
-            Controls.Add(LblSourceImage);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Name = "ImageSplitter";
-            Text = "Image Splitter";
-            Load += ImageSplitter_Load;
+            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(277, 179);
+            this.Controls.Add(LblOutputFormat);
+            this.Controls.Add(TxtOutputFormat);
+            this.Controls.Add(BtnBrowse);
+            this.Controls.Add(PrgProgress);
+            this.Controls.Add(BtnGenerate);
+            this.Controls.Add(NumColumns);
+            this.Controls.Add(NumRows);
+            this.Controls.Add(LblColumns);
+            this.Controls.Add(LblRows);
+            this.Controls.Add(TxtOutputPath);
+            this.Controls.Add(LblOutputPath);
+            this.Controls.Add(TxtSource);
+            this.Controls.Add(LblSourceImage);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ImageSplitter";
+            this.Text = "Image Splitter";
+            this.Load += this.ImageSplitter_Load;
             ((System.ComponentModel.ISupportInitialize)NumRows).EndInit();
             ((System.ComponentModel.ISupportInitialize)NumColumns).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion

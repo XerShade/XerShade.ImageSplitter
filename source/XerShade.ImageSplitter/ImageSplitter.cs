@@ -21,7 +21,7 @@ public partial class ImageSplitter : Form
         {
             if (Directory.Exists(this.TxtSource.Text))
             {
-                foreach(string file in Directory.GetFiles(this.TxtSource.Text))
+                foreach (string file in Directory.GetFiles(this.TxtSource.Text))
                 {
                     string fileName = Path.GetFileNameWithoutExtension(file);
                     string fileExtension = Path.GetExtension(file);
@@ -62,7 +62,8 @@ public partial class ImageSplitter : Form
         this.NumRows.Maximum = Constants.MaxRows;
         this.NumColumns.Maximum = Constants.MaxColumns;
 
-        this.PrgProgress.VisibleChanged += (object? sender, EventArgs e) => { 
+        this.PrgProgress.VisibleChanged += (object? sender, EventArgs e) =>
+        {
             this.Enable(!this.PrgProgress.Visible);
             Application.DoEvents();
         };
